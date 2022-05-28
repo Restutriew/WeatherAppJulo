@@ -147,9 +147,18 @@ public class MainActivity extends AppCompatActivity {
         srl_refreshMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getWeatherNow(cityName);
-                loadForecast(cityName);
-                srl_refreshMain.setRefreshing(false);
+                if (intent.hasExtra("sendCity")) {
+                    String cityGet = data.getString("sendCity");
+                    getWeatherNow(cityGet);
+                    loadForecast(cityGet);
+                    ln_topBar.setVisibility(View.GONE);
+                    srl_refreshMain.setRefreshing(false);
+                } else {
+                    tv_city.setText(cityName);
+                    getWeatherNow(cityName);
+                    loadForecast(cityName);
+                    srl_refreshMain.setRefreshing(false);
+                }
             }
         });
 
